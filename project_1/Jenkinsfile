@@ -1,11 +1,24 @@
-import sys
-
-# Get the environment parameter passed from Jenkins
-if len(sys.argv) > 1:
-    env = sys.argv[1]
-else:
-    env = "unknown"
-
-print(f"--- Student Management & Academic Performance System ---")
-print(f"Loading system configuration for environment: {env.upper()}")
-print(f"Database connection initialized successfully in {env} mode.")
+pipeline {
+    agent any
+    parameters {
+        choice(name: 'ENVIRONMENT', choices: ['dev', 'staging', 'prod'], description: 'Select the deployment environment')
+    }
+    stages {
+        stage ('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com'
+            }
+        }
+        stage('Show Parameter') {
+            steps {
+                echo "Selected environment in Jenkins: ${params.ENVIRONMENT}"
+            }
+        }
+        stage ('Run Python Application') {
+            steps {
+                // Runs the python script and passes the selected parameter as an argument
+                bat "python app.py ${params.ENVIRONMENT}"
+            }
+        }
+    }
+}
