@@ -3,29 +3,26 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Pulls code from your GitHub repository
-                git branch: 'main', url: 'https://github.com'
+                git branch: 'main', url: 'https://github.com<student-username>/<repo-name>.git'
             }
         }
-        stage('Parallel Data Checks') {
+        stage ('Parallel Checks') {
             parallel {
-                stage('Verify Student Records') {
+                stage ('Frontend Check') {
                     steps {
-                        // Runs the student validation script
-                        bat 'python student_check.py'
+                        bat 'python frontend_check.py'
                     }
                 }
-                stage('Verify Academic Grades') {
+                stage ('Backend Check') {
                     steps {
-                        // Runs the grades validation script
-                        bat 'python grades_check.py'
+                        bat 'python backend_check.py'
                     }
                 }
             }
         }
         stage('Summary') {
             steps {
-                echo 'Both student enrollment and academic performance checks completed successfully.'
+                echo 'Both frontend and backend checks are complete.'
             }
         }
     }
