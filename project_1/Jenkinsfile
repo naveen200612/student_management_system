@@ -6,18 +6,17 @@ pipeline {
     stages {
         stage ('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com'
+                git branch: 'main', url: 'https://github.com<student-username>/<repo-name>.git'
             }
         }
         stage('Show Parameter') {
             steps {
-                echo "Selected environment in Jenkins: ${params.ENVIRONMENT}"
+                echo "Selected environment: ${params.ENVIRONMENT}"
             }
         }
-        stage ('Run Python Application') {
+        stage ('Build for Environment') {
             steps {
-                // Runs the python script and passes the selected parameter as an argument
-                bat "python app.py ${params.ENVIRONMENT}"
+                echo "Building the application for the ${params.ENVIRONMENT} environment..."
             }
         }
     }
