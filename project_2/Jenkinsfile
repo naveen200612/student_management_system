@@ -3,20 +3,17 @@ pipeline {
     stages {
         stage ('Checkout') {
             steps {
-                // Pulls code from your GitHub repo
-                git branch: 'main', url: 'https://github.com'
+                git branch: 'main', url: 'https://github.com<student-username>/<repo-name>.git'
             }
         }
         stage ('Generate Report') {
             steps {
-                // Runs the Python script to produce the text file
                 bat 'python app.py'
             }
         }
-        stage ('Archive Student Report') {
+        stage ('Archive Report') {
             steps {
-                // Archives the text file so it can be downloaded from the Jenkins UI
-                archiveArtifacts artifacts: 'student_report.txt', fingerprint: true
+                archiveArtifacts artifacts: 'report.txt', fingerprint: true
             }
         }
     }
