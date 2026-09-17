@@ -3,17 +3,21 @@ pipeline {
     stages {
         stage ('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com<student-username>/<repo-name>.git'
+                git branch: 'main', url: 'https://github.com/naveen200612/student_management_system.git'
             }
         }
         stage ('Generate Report') {
             steps {
-                bat 'python app.py'
+                // Navigate into the project folder before running python
+                dir('project_2') {
+                    bat 'python app.py'
+                }
             }
         }
         stage ('Archive Report') {
             steps {
-                archiveArtifacts artifacts: 'report.txt', fingerprint: true
+                // Archive the report from inside the folder
+                archiveArtifacts artifacts: 'project_2/report.txt', fingerprint: true
             }
         }
     }
