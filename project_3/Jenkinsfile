@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                // Pulls code from your GitHub repository
+                git branch: 'main', url: 'https://github.com'
+            }
+        }
+        stage('Parallel Data Checks') {
+            parallel {
+                stage('Verify Student Records') {
+                    steps {
+                        // Runs the student validation script
+                        bat 'python student_check.py'
+                    }
+                }
+                stage('Verify Academic Grades') {
+                    steps {
+                        // Runs the grades validation script
+                        bat 'python grades_check.py'
+                    }
+                }
+            }
+        }
+        stage('Summary') {
+            steps {
+                echo 'Both student enrollment and academic performance checks completed successfully.'
+            }
+        }
+    }
+}
