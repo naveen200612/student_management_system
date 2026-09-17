@@ -3,19 +3,23 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com<student-username>/<repo-name>.git'
+                git branch: 'main', url: 'https://github.com/naveen200612/student_management_system.git'
             }
         }
         stage ('Parallel Checks') {
             parallel {
                 stage ('Frontend Check') {
                     steps {
-                        bat 'python frontend_check.py'
+                        dir('project_3') {
+                            bat 'python frontend_check.py'
+                        }
                     }
                 }
                 stage ('Backend Check') {
                     steps {
-                        bat 'python backend_check.py'
+                        dir('project_3') {
+                            bat 'python backend_check.py'
+                        }
                     }
                 }
             }
