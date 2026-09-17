@@ -1,0 +1,11 @@
+import sys
+
+# Get the environment parameter passed from Jenkins
+if len(sys.argv) > 1:
+    env = sys.argv[1]
+else:
+    env = "unknown"
+
+print(f"--- Student Management & Academic Performance System ---")
+print(f"Loading system configuration for environment: {env.upper()}")
+print(f"Database connection initialized successfully in {env} mode.")
